@@ -14,3 +14,7 @@ class ElectricCar(Vehicle):
             self.__seating_capacity = seating_capacity
         else:
             raise ValueError("Seating capacity should be greater than zero")
+
+    def calculate_trip_cost(self, distance):
+        pass
+            

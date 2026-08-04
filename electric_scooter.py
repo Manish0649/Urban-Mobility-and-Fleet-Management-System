@@ -13,3 +13,6 @@ class ElectricScooter(Vehicle):
             self.__max_speed_limit = max_speed_limit
         else:
             raise ValueError("Max speed limit should be greater than zero")
+
+    def calculate_trip_cost(self, distance):
+        pass
