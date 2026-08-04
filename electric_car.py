@@ -1,3 +1,5 @@
+from turtle import distance
+
 from vehicle import Vehicle
 
 class ElectricCar(Vehicle):
@@ -16,5 +18,7 @@ class ElectricCar(Vehicle):
             raise ValueError("Seating capacity should be greater than zero")
 
     def calculate_trip_cost(self, distance):
-        pass
+        if distance < 0:
+            raise ValueError("Distance cannot be negative.")
+        return 5 + (0.5 * distance)
             

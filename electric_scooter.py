@@ -14,5 +14,7 @@ class ElectricScooter(Vehicle):
         else:
             raise ValueError("Max speed limit should be greater than zero")
 
-    def calculate_trip_cost(self, distance):
-        pass
+    def calculate_trip_cost(self, minutes):
+        if minutes < 0:
+            raise ValueError("Minutes cannot be negative.")
+        return 1 + (0.15 * minutes)

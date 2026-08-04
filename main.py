@@ -1,25 +1,18 @@
 from electric_car import ElectricCar
 from electric_scooter import ElectricScooter
 
+
 def main():
+
     print("Welcome to Eco-Ride Urban Mobility System")
 
-    scooter = ElectricScooter("S001", "Ola", 90, 70)
-    car = ElectricCar("C001", "BMW", 85, 4)
+    car = ElectricCar("C001", "BMW", 90, 4)
+    scooter = ElectricScooter("S001", "Ola", 85, 70)
 
-    print("Electric Scooter")
-    print("Vehicle ID:", scooter.vehicle_id)
-    print("Model:", scooter.model)
-    print("Battery:", scooter.get_battery_percentage())
-    print("Max Speed:", scooter.get_max_speed_limit())
+    vehicles = [car, scooter]
 
-    print()
-
-    print("Electric Car")
-    print("Vehicle ID:", car.vehicle_id)
-    print("Model:", car.model)
-    print("Battery:", car.get_battery_percentage())
-    print("Seating Capacity:", car.get_seating_capacity())
+    for vehicle in vehicles:
+        print(vehicle.calculate_trip_cost(20))
 
 
 if __name__ == "__main__":
