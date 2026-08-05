@@ -5,6 +5,9 @@ class ElectricScooter(Vehicle):
         super().__init__(vehicle_id, model, battery_percentage)
         self.set_max_speed_limit(max_speed_limit)
 
+    def __repr__(self):
+        return f"({self.vehicle_id},{self.model},{self.get_battery_percentage()},{self.get_max_speed_limit()})"
+
     def get_max_speed_limit(self):
         return self.__max_speed_limit
 
