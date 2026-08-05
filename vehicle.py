@@ -7,6 +7,11 @@ class Vehicle:
         self.__battery_percentage = None
         self.set_battery_percentage(battery_percentage)
 
+    def __eq__(self, other):
+        if isinstance(other, Vehicle):
+            return self.vehicle_id == other.vehicle_id
+        return False
+
     def set_battery_percentage(self, battery_percentage):
         if 0 <= battery_percentage <= 100:
             self.__battery_percentage = battery_percentage

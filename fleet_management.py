@@ -1,5 +1,6 @@
 from electric_car import ElectricCar
 from electric_scooter import ElectricScooter
+from hub import Hub
 
 class FleetManager:
 
@@ -8,36 +9,45 @@ class FleetManager:
 
     def add_hub(self):
         hub_name = input("Enter Hub name: ")
-        if hub_name in self.hubs:
+        hub_key = hub_name.strip().lower()
+        if hub_key in self.hubs:
             print(f"Hub {hub_name} already exists.")
         else:
-            self.hubs[hub_name] = []
+            self.hubs[hub_key] = Hub(hub_name)
             print(f"Hub {hub_name} added.")
 
     def add_vehicle_to_hub(self):
         hub_name = input("Enter Hub name to add vehicle: ")
-        if hub_name not in self.hubs:
+        hub_key = hub_name.strip().lower()
+        hub = self.hubs.get(hub_key)
+        if not hub:
             print(f"Hub {hub_name} does not exist.")
             return
         else:
-            vehicle_type = input("Enter vehicle type (ElectricCar / ElectricScooter): ")
-            if vehicle_type.lower() == "electriccar":
+            vehicle_type = input("Enter vehicle type (ElectricCar / ElectricScooter): ").strip().lower()
+            if vehicle_type == "electriccar":
                 vehicle_id = input("Enter Vehicle ID: ")
                 model = input("Enter Model: ")
                 battery_percentage = int(input("Enter Battery Percentage: "))
                 seating_capacity = int(input("Enter Seating Capacity: "))
                 vehicle = ElectricCar(vehicle_id, model, battery_percentage, seating_capacity)
 
-            elif vehicle_type.lower() == "electricscooter":
+            elif vehicle_type == "electricscooter":
                 vehicle_id = input("Enter Vehicle ID: ")
                 model = input("Enter Model: ")
                 battery_percentage = int(input("Enter Battery Percentage: "))
                 max_speed = int(input("Enter Max Speed: "))
                 vehicle = ElectricScooter(vehicle_id, model, battery_percentage, max_speed)
 
-            self.hubs[hub_name].append(vehicle)
-            print(f"Vehicle {vehicle_id} added to Hub {hub_name} successfully.")
-            print({hub_name: self.hubs[hub_name]})  # Print the hubs dictionary to show the added vehicle
+            else:
+                print("Invalid vehicle type.")
+                return
+
+            success, msg = hub.add_vehicle(vehicle)
+        print(msg)
+        if success:
+            # print format: {'Downtown': [(id,model,battery,seat),]}
+            print({hub.name: hub.vehicles})
 
 
 
