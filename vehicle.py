@@ -6,6 +6,7 @@ class Vehicle:
         self.model = model
         self.__battery_percentage = None
         self.set_battery_percentage(battery_percentage)
+        self.set_maintenance_status("Available")
 
     def __eq__(self, other):
         if isinstance(other, Vehicle):
@@ -22,7 +23,11 @@ class Vehicle:
         return self.__battery_percentage
 
     def set_maintenance_status(self, status):
-        self.__maintenance_status = status
+        valid_statuses = ["Available", "On Trip", "Under Maintenance"]
+        if status in valid_statuses:
+            self.__maintenance_status = status
+        else:
+            raise ValueError("Invalid maintenance status. Please enter Available, On Trip, or Under Maintenance.")
 
     def get_maintenance_status(self):
         return self.__maintenance_status

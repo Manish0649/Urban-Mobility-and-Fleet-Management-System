@@ -9,7 +9,7 @@ class ElectricCar(Vehicle):
         self.set_seating_capacity(seating_capacity)
 
     def __repr__(self):
-        return f"({self.vehicle_id},{self.model},{self.get_battery_percentage()},{self.get_seating_capacity()})"
+        return f"({self.vehicle_id},{self.model},{self.get_battery_percentage()},{self.get_seating_capacity()},{self.get_maintenance_status()})"
 
     def get_seating_capacity(self):
         return self.__seating_capacity

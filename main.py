@@ -7,10 +7,10 @@ def main():
 
     print("Welcome to Eco-Ride Urban Mobility System")
 
-    car1 = ElectricCar("C001", "BMW", 90, 4)
-    car2 = ElectricCar("C002", "Tesla", 95, 5)
-    scooter1 = ElectricScooter("S001", "Ola", 85, 70)
-    scooter2 = ElectricScooter("S002", "Ather", 80, 60)
+    # car1 = ElectricCar("C001", "BMW", 90, 4)
+    # car2 = ElectricCar("C002", "Tesla", 95, 5)
+    # scooter1 = ElectricScooter("S001", "Ola", 85, 70)
+    # scooter2 = ElectricScooter("S002", "Ather", 80, 60)
 
     # vehicles = [car, scooter]
 
@@ -24,6 +24,8 @@ def main():
     # fleet_manager.search_vehicle_in_hub()
     # fleet_manager.search_vehicle_by_battery()
     fleet_manager.view_vehicles_by_type()
+    fleet_manager.get_vehicle_count_by_status()
+
 
 
 if __name__ == "__main__":

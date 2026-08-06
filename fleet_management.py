@@ -31,15 +31,20 @@ class FleetManager:
                 model = input("Enter Model: ")
                 battery_percentage = int(input("Enter Battery Percentage: "))
                 seating_capacity = int(input("Enter Seating Capacity: "))
+                maintenance_status = input("Enter maintenance status (Available / On Trip / Under Maintenance) [Available]: ").strip() or "Available"
                 vehicle = ElectricCar(vehicle_id, model, battery_percentage, seating_capacity)
+                vehicle.set_maintenance_status(maintenance_status)
 
             elif vehicle_type == "electricscooter":
                 vehicle_id = input("Enter Vehicle ID: ")
                 model = input("Enter Model: ")
                 battery_percentage = int(input("Enter Battery Percentage: "))
                 max_speed = int(input("Enter Max Speed: "))
+                maintenance_status = input("Enter maintenance status (Available / On Trip / Under Maintenance) [Available]: ").strip() or "Available"
                 vehicle = ElectricScooter(vehicle_id, model, battery_percentage, max_speed)
+                vehicle.set_maintenance_status(maintenance_status)
 
+            
             else:
                 print("Invalid vehicle type.")
                 return
@@ -121,3 +126,21 @@ class FleetManager:
             print("No Electric Scooters found.")
 
 
+    def get_vehicle_count_by_status(self):
+        hub_name = input("Enter Hub name to get vehicle count by status: ")
+        hub_key = hub_name.strip().lower()
+        hub = self.hubs.get(hub_key)
+        if not hub:
+            print(f"Hub {hub_name} does not exist.")
+            return
+
+        status_count = {"Available": 0, "On Trip": 0, "Under Maintenance": 0}
+
+        for vehicle in hub.vehicles:
+            status = vehicle.get_maintenance_status()
+            if status in status_count:
+                status_count[status] += 1
+
+        print(f"Vehicle count by status in Hub {hub_name}:")
+        for status, count in status_count.items():
+            print(f"  {status}: {count}")
