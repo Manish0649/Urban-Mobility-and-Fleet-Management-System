@@ -1,3 +1,4 @@
+from collections import defaultdict
 from electric_car import ElectricCar
 from electric_scooter import ElectricScooter
 from hub import Hub
@@ -88,5 +89,35 @@ class FleetManager:
         for vehicle in high_battery_vehicles:
             print(vehicle)  
 
+
+    def view_vehicles_by_type(self):
+        hub_name = input("Enter Hub name to view vehicles by type: ")
+        hub_key = hub_name.strip().lower()
+        hub = self.hubs.get(hub_key)
+        if not hub:
+            print(f"Hub {hub_name} does not exist.")
+            return
+
+        grouped_vehicles = defaultdict(list)
+
+        for vehicle in hub.vehicles:
+            if isinstance(vehicle, ElectricCar):
+                grouped_vehicles['ElectricCar'].append(vehicle)
+            elif isinstance(vehicle, ElectricScooter):
+                grouped_vehicles['ElectricScooter'].append(vehicle)
+
+        print("\nCars:")
+        if grouped_vehicles['ElectricCar']:
+            for car in grouped_vehicles['ElectricCar']:
+                print(car)
+        else:
+            print("No Electric Cars found.")
+
+        print("\nScooters:")
+        if grouped_vehicles['ElectricScooter']:
+            for scooter in grouped_vehicles['ElectricScooter']:
+                print(scooter)
+        else:
+            print("No Electric Scooters found.")
 
 
