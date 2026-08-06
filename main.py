@@ -21,6 +21,8 @@ def main():
     fleet_manager.add_hub()
     fleet_manager.add_vehicle_to_hub()
     fleet_manager.add_vehicle_to_hub()
+    fleet_manager.search_vehicle_in_hub()
+    fleet_manager.search_vehicle_by_battery()
 
 
 if __name__ == "__main__":

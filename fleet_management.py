@@ -49,5 +49,44 @@ class FleetManager:
             # print format: {'Downtown': [(id,model,battery,seat),]}
             print({hub.name: hub.vehicles})
 
+    def search_vehicle_in_hub(self):
+        hub_name = input("Enter Hub name to search vehicle: ")
+        hub_key = hub_name.strip().lower()
+        hub = self.hubs.get(hub_key)
+        if not hub:
+            print(f"Hub {hub_name} does not exist.")
+            return 
+        vehicles = hub.vehicles
+        if not vehicles:
+            print(f"No vehicles found in Hub {hub_name}.")
+            return
+
+        print(f"Vehicles in Hub {hub_name}:")
+        for vehicle in vehicles:
+            print(vehicle)
+
+
+    def search_vehicle_by_battery(self):
+        hub_name = input("Enter Hub name to search vehicle by battery percentage: ")
+        hub_key = hub_name.strip().lower()
+        hub = self.hubs.get(hub_key)
+        if not hub:
+            print(f"Hub {hub_name} does not exist.")
+            return
+
+        vehicles = hub.vehicles
+        if not vehicles:
+            print(f"No vehicles found in Hub {hub_name}.")
+            return
+
+        high_battery_vehicles = list(filter(lambda v: v.get_battery_percentage() > 80, vehicles))
+        if not high_battery_vehicles:
+            print(f"No vehicles with battery percentage greater than 80% found in Hub {hub_name}.")
+            return
+
+        print(f"Vehicles with battery percentage greater than 80% in Hub {hub_name}:")
+        for vehicle in high_battery_vehicles:
+            print(vehicle)  
+
 
 
