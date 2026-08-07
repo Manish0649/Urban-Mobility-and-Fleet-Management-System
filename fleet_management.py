@@ -144,3 +144,18 @@ class FleetManager:
         print(f"Vehicle count by status in Hub {hub_name}:")
         for status, count in status_count.items():
             print(f"  {status}: {count}")
+
+    def get_vehicles_sorted_by_modelname(self):
+        hub_name = input("Enter Hub name to get vehicles sorted by model name: ")
+        hub_key = hub_name.strip().lower()
+        hub = self.hubs.get(hub_key)
+        if not hub:
+            print(f"Hub {hub_name} does not exist.")
+            return
+
+        sorted_vehicles = sorted(hub.vehicles, key=lambda v: v.model.lower())
+
+        print(f"\nVehicles in Hub {hub_name} sorted by model name:")
+        for vehicle in sorted_vehicles:
+            print(vehicle)
+        print("\n")

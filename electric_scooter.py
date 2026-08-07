@@ -8,6 +8,14 @@ class ElectricScooter(Vehicle):
     def __repr__(self):
         return f"({self.vehicle_id},{self.model},{self.get_battery_percentage()},{self.get_max_speed_limit()},{self.get_maintenance_status()})"
 
+    def __str__(self):
+        return (
+            f"Electric Scooter | ID: {self.vehicle_id} | "
+            f"Model: {self.model} | Battery: {self.get_battery_percentage()}% | "
+            f"Max Speed: {self.get_max_speed_limit()} | "
+            f"Status: {self.get_maintenance_status()}"
+        )
+
     def get_max_speed_limit(self):
         return self.__max_speed_limit
 

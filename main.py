@@ -24,7 +24,9 @@ def main():
     # fleet_manager.search_vehicle_in_hub()
     # fleet_manager.search_vehicle_by_battery()
     fleet_manager.view_vehicles_by_type()
-    fleet_manager.get_vehicle_count_by_status()
+    # fleet_manager.get_vehicle_count_by_status()
+    fleet_manager.get_vehicles_sorted_by_modelname()
+
 
 
 

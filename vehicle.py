@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class Vehicle:
+class Vehicle(ABC):
     def __init__(self, vehicle_id, model, battery_percentage):
         self.vehicle_id = vehicle_id
         self.model = model
@@ -12,6 +12,14 @@ class Vehicle:
         if isinstance(other, Vehicle):
             return self.vehicle_id == other.vehicle_id
         return False
+
+    def __str__(self):
+        return (
+            f"ID: {self.vehicle_id} | "
+            f"Model: {self.model} | "
+            f"Battery: {self.get_battery_percentage()}% | "
+            f"Status: {self.get_maintenance_status()}"
+        )
 
     def set_battery_percentage(self, battery_percentage):
         if 0 <= battery_percentage <= 100:

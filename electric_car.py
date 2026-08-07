@@ -11,6 +11,14 @@ class ElectricCar(Vehicle):
     def __repr__(self):
         return f"({self.vehicle_id},{self.model},{self.get_battery_percentage()},{self.get_seating_capacity()},{self.get_maintenance_status()})"
 
+    def __str__(self):
+        return (
+            f"ID: {self.vehicle_id} | "
+            f"Model: {self.model} | "
+            f"Battery: {self.get_battery_percentage()}% | "
+            f"Status: {self.get_maintenance_status()}"
+        )
+
     def get_seating_capacity(self):
         return self.__seating_capacity
 

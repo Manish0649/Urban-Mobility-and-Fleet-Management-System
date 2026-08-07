@@ -7,5 +7,6 @@ class Hub:
         if any(v.vehicle_id == vehicle.vehicle_id for v in self.vehicles):
             return False, f"a vehicle with id {vehicle.vehicle_id} already exists in the {self.name} hub"
         self.vehicles.append(vehicle)
+
         return True, f"Vehicle {vehicle.vehicle_id} added to Hub {self.name} successfully."
     
