@@ -159,3 +159,30 @@ class FleetManager:
         for vehicle in sorted_vehicles:
             print(vehicle)
         print("\n")
+
+
+    def sort_vehicles_by(self,attribute):
+        hub_name = input("Enter Hub name to sort vehicles: ")
+        hub_key = hub_name.strip().lower()
+        hub = self.hubs.get(hub_key)
+        if not hub:
+            print(f"Hub {hub_name} does not exist.")
+            return
+
+        attribute = attribute.strip().lower()
+        if attribute == "battery":
+            sorted_vehicles = sorted(hub.vehicles, key = lambda v:v.get_battery_percentage(), reverse = True)
+            title = "sorted by battery percentage (descending):"
+
+        elif attribute == "fare":
+            sorted_vehicles = sorted(hub.vehicles, key = lambda v:v.get_rental_price(), reverse = True)
+            title = "sorted by fare price (descending):"
+
+        else:
+            print("Invalid attribute. Please choose 'battery' or 'fare'.")
+            return
+
+        print(f"\nVehicles in Hub {hub_name} {title}")
+        for vehicle in sorted_vehicles:
+            print(vehicle)
+        

@@ -16,7 +16,9 @@ class ElectricCar(Vehicle):
             f"ID: {self.vehicle_id} | "
             f"Model: {self.model} | "
             f"Battery: {self.get_battery_percentage()}% | "
-            f"Status: {self.get_maintenance_status()}"
+            f"Status: {self.get_maintenance_status()} | "
+            f"Seating Capacity: {self.get_seating_capacity()} | "
+            f"Rental Price: ${self.get_rental_price():.2f}"
         )
 
     def get_seating_capacity(self):

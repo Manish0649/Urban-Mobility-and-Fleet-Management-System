@@ -12,8 +12,9 @@ class ElectricScooter(Vehicle):
         return (
             f"Electric Scooter | ID: {self.vehicle_id} | "
             f"Model: {self.model} | Battery: {self.get_battery_percentage()}% | "
+            f"Status: {self.get_maintenance_status()} | "
             f"Max Speed: {self.get_max_speed_limit()} | "
-            f"Status: {self.get_maintenance_status()}"
+            f"Rental Price: ${self.get_rental_price():.2f}"
         )
 
     def get_max_speed_limit(self):

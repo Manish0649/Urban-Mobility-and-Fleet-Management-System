@@ -1,12 +1,14 @@
 from abc import ABC, abstractmethod
 
 class Vehicle(ABC):
-    def __init__(self, vehicle_id, model, battery_percentage):
+    def __init__(self, vehicle_id, model, battery_percentage,fare_price):
         self.vehicle_id = vehicle_id
         self.model = model
         self.__battery_percentage = None
         self.set_battery_percentage(battery_percentage)
         self.set_maintenance_status("Available")
+        self.set_rental_price(fare_price)
+        
 
     def __eq__(self, other):
         if isinstance(other, Vehicle):
@@ -18,7 +20,8 @@ class Vehicle(ABC):
             f"ID: {self.vehicle_id} | "
             f"Model: {self.model} | "
             f"Battery: {self.get_battery_percentage()}% | "
-            f"Status: {self.get_maintenance_status()}"
+            f"Status: {self.get_maintenance_status()} | "
+            f"Rental Price: ${self.get_rental_price():.2f}"
         )
 
     def set_battery_percentage(self, battery_percentage):
