@@ -1,8 +1,8 @@
 from vehicle import Vehicle
 
 class ElectricScooter(Vehicle):
-    def __init__(self, vehicle_id, model, battery_percentage, max_speed_limit):
-        super().__init__(vehicle_id, model, battery_percentage)
+    def __init__(self, vehicle_id, model, battery_percentage,fare_price, max_speed_limit):
+        super().__init__(vehicle_id, model, battery_percentage,fare_price)
         self.set_max_speed_limit(max_speed_limit)
 
     def __repr__(self):

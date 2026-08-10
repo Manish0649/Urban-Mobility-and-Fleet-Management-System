@@ -1,0 +1,3 @@
+hub_name,vehicle_type,vehicle_id,model,battery_percentage,maintenance_status,rental_price,seating_capacity,max_speed_limit
+downtown,ElectricCar,C001,BMW,89,Available,0,4,
+downtown,ElectricCar,C002,tesla,90,Available,0,2,

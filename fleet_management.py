@@ -1,3 +1,4 @@
+import csv
 from collections import defaultdict
 from electric_car import ElectricCar
 from electric_scooter import ElectricScooter
@@ -30,18 +31,20 @@ class FleetManager:
                 vehicle_id = input("Enter Vehicle ID: ")
                 model = input("Enter Model: ")
                 battery_percentage = int(input("Enter Battery Percentage: "))
+                fare_price = float(input("Enter Fare Price: "))
                 seating_capacity = int(input("Enter Seating Capacity: "))
                 maintenance_status = input("Enter maintenance status (Available / On Trip / Under Maintenance) [Available]: ").strip() or "Available"
-                vehicle = ElectricCar(vehicle_id, model, battery_percentage, seating_capacity)
+                vehicle = ElectricCar(vehicle_id, model, battery_percentage, fare_price, seating_capacity)
                 vehicle.set_maintenance_status(maintenance_status)
 
             elif vehicle_type == "electricscooter":
                 vehicle_id = input("Enter Vehicle ID: ")
                 model = input("Enter Model: ")
                 battery_percentage = int(input("Enter Battery Percentage: "))
+                fare_price = float(input("Enter Fare Price: "))
                 max_speed = int(input("Enter Max Speed: "))
                 maintenance_status = input("Enter maintenance status (Available / On Trip / Under Maintenance) [Available]: ").strip() or "Available"
-                vehicle = ElectricScooter(vehicle_id, model, battery_percentage, max_speed)
+                vehicle = ElectricScooter(vehicle_id, model, battery_percentage, fare_price, max_speed)
                 vehicle.set_maintenance_status(maintenance_status)
 
             
@@ -186,3 +189,70 @@ class FleetManager:
         for vehicle in sorted_vehicles:
             print(vehicle)
         
+    def save_to_csv(self, filename="fleet.csv"):
+        fieldnames = [
+            "hub_name",
+            "vehicle_type",
+            "vehicle_id",
+            "model",
+            "battery_percentage",
+            "maintenance_status",
+            "rental_price",
+            "seating_capacity",
+            "max_speed_limit",
+        ]
+        with open(filename, mode="w", newline="", encoding="utf-8") as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+            for hub in self.hubs.values():
+                for vehicle in hub.vehicles:
+                    row = {
+                        "hub_name": hub.name,
+                        "vehicle_type": type(vehicle).__name__,
+                        "vehicle_id": vehicle.vehicle_id,
+                        "model": vehicle.model,
+                        "battery_percentage": vehicle.get_battery_percentage(),
+                        "maintenance_status": vehicle.get_maintenance_status(),
+                        "rental_price": vehicle.get_rental_price(),
+                        "seating_capacity": "",
+                        "max_speed_limit": "",
+                    }
+                    if isinstance(vehicle, ElectricCar):
+                        row["seating_capacity"] = vehicle.get_seating_capacity()
+                    elif isinstance(vehicle, ElectricScooter):
+                        row["max_speed_limit"] = vehicle.get_max_speed_limit()
+                    writer.writerow(row)
+
+    def load_from_csv(self, filename="fleet.csv"):
+        try:
+            with open(filename, mode="r", newline="", encoding="utf-8") as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    hub_name = row["hub_name"].strip()
+                    hub_key = hub_name.lower()
+                    hub = self.hubs.setdefault(hub_key, Hub(hub_name))
+
+                    if row["vehicle_type"] == "ElectricCar":
+                        vehicle = ElectricCar(
+                            row["vehicle_id"],
+                            row["model"],
+                            int(row["battery_percentage"]),
+                            float(row["rental_price"] or 0),
+                            int(row["seating_capacity"]),
+                        )
+                    elif row["vehicle_type"] == "ElectricScooter":
+                        vehicle = ElectricScooter(
+                            row["vehicle_id"],
+                            row["model"],
+                            int(row["battery_percentage"]),
+                            float(row["rental_price"] or 0),
+                            int(row["max_speed_limit"]),
+                        )
+                    else:
+                        continue
+
+                    vehicle.set_maintenance_status(row["maintenance_status"] or "Available")
+                    vehicle.set_rental_price(float(row["rental_price"] or 0))
+                    hub.add_vehicle(vehicle)
+        except FileNotFoundError:
+            pass

@@ -1,10 +1,8 @@
-from turtle import distance
-
 from vehicle import Vehicle
 
 class ElectricCar(Vehicle):
-    def __init__(self, vehicle_id, model, battery_percentage, seating_capacity):
-        super().__init__(vehicle_id, model, battery_percentage)
+    def __init__(self, vehicle_id, model, battery_percentage,fare_price, seating_capacity):
+        super().__init__(vehicle_id, model, battery_percentage,fare_price)
         self.__seating_capacity = None
         self.set_seating_capacity(seating_capacity)
 
