@@ -14,6 +14,8 @@ def print_menu():
     print("9. Sort Vehicles by Fare Price")
     print("10. Save Fleet to CSV")
     print("11. Load Fleet from CSV")
+    print("12. Save Fleet to JSON")
+    print("13. Load Fleet from JSON")
     print("0. Exit")
 
 
@@ -49,12 +51,19 @@ def main():
         elif choice == "11":
             fleet_manager.load_from_csv("fleet.csv")
             print("Fleet data loaded from fleet.csv.")
+        elif choice == "12":
+            fleet_manager.save_to_json("fleet.json")
+            print("Fleet data saved to fleet.json.")
+        elif choice == "13":
+            fleet_manager.load_from_json("fleet.json")
+            print("Fleet data loaded from fleet.json.")
         elif choice == "0":
             fleet_manager.save_to_csv("fleet.csv")
             print("Fleet data saved. Exiting.")
             break
+        
         else:
-            print("Invalid option. Please enter a number from 0 to 11.")
+            print("Invalid option. Please enter a number from 0 to 13.")
 
 
 if __name__ == "__main__":

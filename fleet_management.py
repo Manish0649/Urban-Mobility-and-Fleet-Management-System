@@ -1,4 +1,5 @@
 import csv
+import json
 from collections import defaultdict
 from electric_car import ElectricCar
 from electric_scooter import ElectricScooter
@@ -254,5 +255,80 @@ class FleetManager:
                     vehicle.set_maintenance_status(row["maintenance_status"] or "Available")
                     vehicle.set_rental_price(float(row["rental_price"] or 0))
                     hub.add_vehicle(vehicle)
+        except FileNotFoundError:
+            pass
+
+    def save_to_json(self, filename="fleet.json"):
+        data = []
+
+        for hub in self.hubs.values():
+            hub_data = {
+                "hub_name": hub.name,
+                "vehicles": []
+            }
+
+            for vehicle in hub.vehicles:
+                vehicle_data = {
+                    "vehicle_type": type(vehicle).__name__,
+                    "vehicle_id": vehicle.vehicle_id,
+                    "model": vehicle.model,
+                    "battery_percentage": vehicle.get_battery_percentage(),
+                    "maintenance_status": vehicle.get_maintenance_status(),
+                    "rental_price": vehicle.get_rental_price()
+                }
+
+                if isinstance(vehicle, ElectricCar):
+                    vehicle_data["seating_capacity"] = vehicle.get_seating_capacity()
+
+                elif isinstance(vehicle, ElectricScooter):
+                    vehicle_data["max_speed_limit"] = vehicle.get_max_speed_limit()
+
+                hub_data["vehicles"].append(vehicle_data)
+
+            data.append(hub_data)
+
+        with open(filename, "w", encoding="utf-8") as jsonfile:
+            json.dump(data, jsonfile, indent=4)
+
+    def load_from_json(self, filename="fleet.json"):
+        try:
+            with open(filename, "r", encoding="utf-8") as jsonfile:
+                data = json.load(jsonfile)
+
+            for hub_data in data:
+                hub_name = hub_data["hub_name"].strip()
+                hub_key = hub_name.lower()
+
+                hub = self.hubs.setdefault(hub_key, Hub(hub_name))
+
+                for vehicle_data in hub_data["vehicles"]:
+
+                    if vehicle_data["vehicle_type"] == "ElectricCar":
+                        vehicle = ElectricCar(
+                            vehicle_data["vehicle_id"],
+                            vehicle_data["model"],
+                            int(vehicle_data["battery_percentage"]),
+                            float(vehicle_data["rental_price"]),
+                            int(vehicle_data["seating_capacity"])
+                        )
+
+                    elif vehicle_data["vehicle_type"] == "ElectricScooter":
+                        vehicle = ElectricScooter(
+                            vehicle_data["vehicle_id"],
+                            vehicle_data["model"],
+                            int(vehicle_data["battery_percentage"]),
+                            float(vehicle_data["rental_price"]),
+                            int(vehicle_data["max_speed_limit"])
+                        )
+
+                    else:
+                        continue
+
+                    vehicle.set_maintenance_status(
+                        vehicle_data.get("maintenance_status", "Available")
+                    )
+
+                    hub.add_vehicle(vehicle)
+
         except FileNotFoundError:
             pass

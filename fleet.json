@@ -1,0 +1,25 @@
+[
+    {
+        "hub_name": "downtown",
+        "vehicles": [
+            {
+                "vehicle_type": "ElectricCar",
+                "vehicle_id": "C001",
+                "model": "BMW",
+                "battery_percentage": 89,
+                "maintenance_status": "Available",
+                "rental_price": 0.0,
+                "seating_capacity": 4
+            },
+            {
+                "vehicle_type": "ElectricCar",
+                "vehicle_id": "C002",
+                "model": "tesla",
+                "battery_percentage": 90,
+                "maintenance_status": "Available",
+                "rental_price": 0.0,
+                "seating_capacity": 2
+            }
+        ]
+    }
+]
